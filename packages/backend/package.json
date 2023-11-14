@@ -1,7 +1,7 @@
 {
   "name": "@cgs-team-boilerplate/backend",
   "version": "1.0.0",
-  "description": "Mongoose Node.js Express TypeScript application boilerplate with best practices for API development.",
+  "description": "PostgreSQL Node.js Express TypeScript application boilerplate with best practices for API development.",
   "author": "Paul Cham",
   "license": "MIT",
   "scripts": {
@@ -27,12 +27,11 @@
     "gravatar": "^1.8.0",
     "http-status-codes": "^1.3.2",
     "jsonwebtoken": "^8.5.1",
-    "pg": "^8.10.0",
+    "pg": "8.11.3",
     "prettier": "^2.7.1",
     "reflect-metadata": "^0.1.13",
     "request": "^2.88.0",
-    "typeorm": "^0.3.7",
-    "typescript": "^4.7.4"
+    "typeorm": "0.3.17"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -44,6 +43,6 @@
     "concurrently": "^4.1.0",
     "nodemon": "^1.19.0",
     "tslint": "^6.1.3",
-    "typescript": "^3.4.5"
+    "typescript": "^5.2.2"
   }
 }
