@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import express from 'express';
-
-import AppRouter from './routes';
 import { connectDB } from './config/database.config';
+import { exceptionFilter } from './middleware/exception-filter.middleware';
+import AppRouter from './routes';
 
 const app = express();
 const router = new AppRouter(app);
@@ -16,6 +16,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 router.init();
+
+app.use(exceptionFilter);
 
 const port = app.get('port');
 // eslint-disable-next-line no-console
