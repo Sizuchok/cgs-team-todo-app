@@ -27,7 +27,6 @@ export const connectDB = async () => {
   try {
     await AppDataSource.initialize();
   } catch (error) {
-    console.log(error);
     process.exit(1);
   }
 };
