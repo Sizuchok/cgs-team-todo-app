@@ -1,15 +1,41 @@
-import { Response, Request } from 'express';
-import TodoService from '../services/todo.service';
+import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
+import todoService from '../services/todo.service';
 
 export class TodoController {
-  constructor(private todoService: TodoService) {}
+  async createTodo(req: Request, res: Response) {
+    const todo = await todoService.createTodo(req.body);
+    res.status(StatusCodes.CREATED).json(todo);
+  }
 
-  async getAllTodo(_: Request, res: Response) {
-    // TODO: Write your implementation here
-    const todos = await this.todoService.findAll();
-    res.send(todos);
+  async getTodoById(req: Request, res: Response) {
+    const { id } = req.params;
+    const todo = await todoService.findTodoById(id);
+    res.json(todo);
+  }
+
+  async getAllTodos(_: Request, res: Response) {
+    const todos = await todoService.findAllTodos();
+    res.json(todos);
+  }
+
+  async updateTodoById(req: Request, res: Response) {
+    const { id } = req.params;
+    const updateData = req.body;
+
+    const updatedTodo = await todoService.updateTodoById(id, updateData);
+
+    res.json(updatedTodo);
+  }
+
+  async removeTodoById(req: Request, res: Response) {
+    const { id } = req.params;
+
+    await todoService.removeTodoById(id);
+
+    res.status(StatusCodes.NO_CONTENT).send();
   }
 }
 
-const todoController = new TodoController(new TodoService());
+const todoController = new TodoController();
 export default todoController;
