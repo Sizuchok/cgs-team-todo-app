@@ -1,31 +1,26 @@
 // Local storage keys
 export const STORAGE_KEYS = {
-  JWT_TOKEN_STUDENT: 'JWT_TOKEN_STUDENT',
-  JWT_TOKEN_INSTRUCTOR: 'JWT_TOKEN_INSTRUCTOR',
+  JWT_TOKEN: 'JWT_TOKEN_STUDENT',
   ADDRESS: 'ADDRESS',
   TOKEN: 'TOKEN'
-};
+} as const;
 
 // React-query keys
 export const QUERY_KEYS = {
-  EXAMPLE: 'EXAMPLE',
-  TOKEN: 'TOKEN',
-  STATISTIC: 'statistic',
-  TRENDING: 'trending'
-};
+  GET_ALL_TODOS: 'get-all-todos',
+  GET_TODO_BY_ID: 'get-todo-by-id',
+  CREATE_TODO: 'create-todo',
+  UPDATE_TODO: 'update-todo',
+  DELETE_TODO: 'delete-todo'
+} as const;
 
 // Backend Routes
 export const BACKEND_KEYS = {
-  EXAMPLE: 'example',
-  COURSES: 'courses',
-  ARTICLES: 'articles',
-  STATISTIC: 'statistic',
-  TRENDING: 'trending',
-  FEATURED_ARTICLES: 'featured_articles'
-};
+  TODOS: 'todos'
+} as const;
 
 export const ROUTER_KEYS = {
   ROOT: '/',
-  HOME: 'home',
+  TODOS: 'todos',
   AUTHORIZED: 'authorized'
-};
+} as const;
