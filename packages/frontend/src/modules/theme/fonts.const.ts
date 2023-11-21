@@ -1,14 +1,19 @@
 export const SIZES = {
-  l: '1.5rem',
+  xs: '0.75rem',
+  s: '0.875rem',
   m: '1rem',
-  s: '0.5rem'
-};
+  l: '1.25rem',
+  xl: '1.5rem'
+} as const;
 
 export const FAMILIES = {
-  normal: 'Arial'
-};
+  primary: "'Nunito', sans-serif",
+  forms: "'Lexend', sans-serif"
+} as const;
 
 export const WEIGHTS = {
-  bold: '800',
-  normal: '500'
-};
+  light: '400',
+  normal: '500',
+  bolder: '600',
+  bold: '700'
+} as const;
