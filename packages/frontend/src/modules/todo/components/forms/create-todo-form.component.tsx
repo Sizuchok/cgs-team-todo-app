@@ -13,10 +13,10 @@ type Props = {
 };
 
 const CreateTodoForm = ({ handleClose }: Props) => {
-  const { mutateAsync } = useCreateTodo();
+  const { mutate } = useCreateTodo();
 
-  const handleSubmit = async (values: CreateTodo) => {
-    await mutateAsync(values);
+  const handleSubmit = (values: CreateTodo) => {
+    mutate(values);
     handleClose();
   };
 

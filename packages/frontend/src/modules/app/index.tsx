@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { ThemeProvider } from 'styled-components';
 import { RouterProvider } from 'react-router-dom';
 import { Toaster } from 'sonner';
+import { ThemeProvider } from 'styled-components';
 import '../../style.css';
 import { router } from '../navigation';
 import * as theme from '../theme';

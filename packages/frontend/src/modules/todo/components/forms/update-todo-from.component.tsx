@@ -5,7 +5,7 @@ import { Label } from '../../../common/components/label/label.styled';
 import { Switch } from '../../../common/components/switch/switch.component';
 import { Todo, UpdateTodo } from '../../../common/types/todo.types';
 import { useUpdateTodo } from '../../hooks/update-todo.hook';
-import { CreateTodoSchema } from '../../schemas/create-todo.schema';
+import { UpdateTodoSchema } from '../../schemas/update-todo.schema';
 import * as Styled from './todo-form.styled';
 
 type Props = {
@@ -14,10 +14,10 @@ type Props = {
 };
 
 const UpdateTodoForm = ({ todo, handleClose }: Props) => {
-  const { mutateAsync } = useUpdateTodo(todo.id);
+  const { mutate } = useUpdateTodo(todo.id);
 
-  const handleSubmit = async (values: UpdateTodo) => {
-    await mutateAsync(values);
+  const handleSubmit = (values: UpdateTodo) => {
+    mutate(values);
     handleClose();
   };
 
@@ -30,7 +30,7 @@ const UpdateTodoForm = ({ todo, handleClose }: Props) => {
         isChecked: todo.isChecked
       }}
       onSubmit={handleSubmit}
-      validationSchema={CreateTodoSchema}
+      validationSchema={UpdateTodoSchema}
     >
       {({ isSubmitting, handleChange, values, errors }) => (
         <Form>
