@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { APP_KEYS } from '../common/consts';
-import TodosPage from '../common/todo/todos-page.container';
+import TodosPage from '../todo/todos-page.container';
 
 export const router = createBrowserRouter([
   {
