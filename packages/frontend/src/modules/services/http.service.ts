@@ -1,28 +1,28 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosStatic } from 'axios';
 import { APP_KEYS } from '../common/consts';
 
-type RequestConfig<TData = unknown> = AxiosRequestConfig<TData> & {
-  url: string;
-};
+type RequestConfig<TData = unknown> = AxiosRequestConfig<TData> & {};
 
 type MutationRequestConfig<TData = unknown> = RequestConfig<TData> & {
   data: TData;
 };
 
-export class HttpService {
+export abstract class HttpService {
   private fetchingService: AxiosStatic;
 
   constructor(
-    private baseUrl: string | undefined = process.env.SERVER_URL,
+    private baseUrl: string | undefined,
+    private resource: string,
     private apiVersion: string = 'v1'
   ) {
     this.baseUrl = baseUrl;
     this.fetchingService = axios;
     this.apiVersion = apiVersion;
+    this.resource = resource;
   }
 
-  private getFullApiUrl(url: string): string {
-    return `${this.baseUrl}/api/${this.apiVersion}/${url}`;
+  private getFullApiUrl(url: string | undefined): string {
+    return `${this.baseUrl}/api/${this.apiVersion}/${this.resource}/${url ?? ''}`;
   }
 
   private populateTokenToHeaderConfig(): Record<string, string> {
@@ -33,7 +33,6 @@ export class HttpService {
 
   private extractUrlAndDataFromConfig({
     data,
-    url,
     ...configWithoutDataAndUrl
   }: RequestConfig): AxiosRequestConfig {
     return configWithoutDataAndUrl;
