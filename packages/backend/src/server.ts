@@ -1,3 +1,4 @@
+import cors from 'cors';
 import 'dotenv/config';
 import express from 'express';
 import { connectDB } from './config/database.config';
@@ -11,9 +12,10 @@ const router = new AppRouter(app);
 connectDB();
 
 // Express configuration
-app.set('port', process.env.PORT || 4200);
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.set('port', process.env.PORT || 4200);
 
 router.init();
 
