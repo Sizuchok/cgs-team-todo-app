@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { IoTrashBin } from 'react-icons/io5';
 import { RiEditCircleFill } from 'react-icons/ri';
 import ConfirmActionModal from '../../../common/components/modal/confirm-action-modal/confirm-action-modal.component';
-import Modal from '../../../common/components/modal/modal.component';
+import Modal from '../../../common/components/modal/modal-container/modal.component';
 import { Switch } from '../../../common/components/switch/switch.component';
 import { Todo } from '../../../common/types/todo.types';
 import { useDeleteTodo } from '../../hooks/delete-todo.hook';

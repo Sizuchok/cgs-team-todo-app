@@ -10,3 +10,14 @@ export const COLORS = {
   inputFocus: '#0101ff',
   danger: '#da1b41'
 } as const;
+
+export const SWITCH_COLORS = {
+  white: '#fff',
+  enabledBackgroundDark: '#2ECA45',
+  enabledbackgroundLight: '#65C466',
+  focus: '#33cf4d',
+  disabledDark: '#757575',
+  disabledLight: '#F5F5F5',
+  backgroundDark: '#39393D',
+  backgroundLight: '#E9E9EA'
+} as const;

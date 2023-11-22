@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from '../common/components/button/button.component';
 import Filters from '../common/components/filters/todo-filters.component';
 import PrimaryLayout from '../common/components/layouts/primary-layout/primary-layout.component';
-import Modal from '../common/components/modal/modal.component';
+import Modal from '../common/components/modal/modal-container/modal.component';
 import SearchBar from '../common/components/search-bar/search-bar.component';
 import useMedia from '../common/hooks/use-media.hook';
 import CreateTodoForm from './components/forms/create-todo-form.component';

@@ -1,5 +1,6 @@
 import MUISwitch, { SwitchProps } from '@mui/material/Switch/Switch';
 import { styled } from '@mui/material/styles';
+import { SWITCH_COLORS } from '../../../theme';
 
 export const Switch = styled((props: SwitchProps) => (
   <MUISwitch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
@@ -13,9 +14,12 @@ export const Switch = styled((props: SwitchProps) => (
     transitionDuration: '300ms',
     '&.Mui-checked': {
       transform: 'translateX(16px)',
-      color: '#fff',
+      color: `${SWITCH_COLORS.white}`,
       '& + .MuiSwitch-track': {
-        backgroundColor: theme.palette.mode === 'dark' ? '#2ECA45' : '#65C466',
+        backgroundColor:
+          theme.palette.mode === 'dark'
+            ? `${SWITCH_COLORS.enabledBackgroundDark}`
+            : `${SWITCH_COLORS.enabledbackgroundLight}`,
         opacity: 1,
         border: 0
       },
@@ -24,11 +28,14 @@ export const Switch = styled((props: SwitchProps) => (
       }
     },
     '&.Mui-focusVisible .MuiSwitch-thumb': {
-      color: '#33cf4d',
-      border: '6px solid #fff'
+      color: `${SWITCH_COLORS.focus}`,
+      border: `6px solid ${SWITCH_COLORS.white}`
     },
     '&.Mui-disabled .MuiSwitch-thumb': {
-      color: theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[600]
+      color:
+        theme.palette.mode === 'light'
+          ? `${SWITCH_COLORS.disabledLight}`
+          : `${SWITCH_COLORS.disabledDark}`
     },
     '&.Mui-disabled + .MuiSwitch-track': {
       opacity: theme.palette.mode === 'light' ? 0.7 : 0.3
@@ -41,7 +48,10 @@ export const Switch = styled((props: SwitchProps) => (
   },
   '& .MuiSwitch-track': {
     borderRadius: 26 / 2,
-    backgroundColor: theme.palette.mode === 'light' ? '#E9E9EA' : '#39393D',
+    backgroundColor:
+      theme.palette.mode === 'light'
+        ? `${SWITCH_COLORS.backgroundLight}`
+        : `${SWITCH_COLORS.backgroundDark}`,
     opacity: 1,
     transition: theme.transitions.create(['background-color'], {
       duration: 500

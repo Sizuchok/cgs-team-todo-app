@@ -1,20 +1,14 @@
-import MUIModal, { ModalProps } from '@mui/material/Modal';
+import { ModalProps } from '@mui/material/Modal';
 import { ReactNode } from 'react';
+import * as Styled from './modal.styled';
 
 type Props = ModalProps & {
   children: ReactNode;
 };
 
-const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center'
-};
-
 const Modal = ({ children, ...props }: Props) => (
-  <MUIModal
+  <Styled.Modal
     {...props}
-    sx={style}
     slotProps={{
       backdrop: {
         sx: { backgroundColor: 'transparent', backdropFilter: 'blur(5px)' }
@@ -22,7 +16,7 @@ const Modal = ({ children, ...props }: Props) => (
     }}
   >
     {children}
-  </MUIModal>
+  </Styled.Modal>
 );
 
 export default Modal;

@@ -1,5 +1,4 @@
 import { Form, Formik } from 'formik';
-import Button from '../../../common/components/button/button.component';
 import Input from '../../../common/components/input/input';
 import { Label } from '../../../common/components/label/label.styled';
 import { Switch } from '../../../common/components/switch/switch.component';
@@ -7,6 +6,7 @@ import { CreateTodo } from '../../../common/types/todo.types';
 import { useCreateTodo } from '../../hooks/create-todo.hook';
 import { CreateTodoSchema } from '../../schemas/create-todo.schema';
 import * as Styled from './todo-form.styled';
+import Button from '../../../common/components/button/button.component';
 
 type Props = {
   handleClose: () => void;
