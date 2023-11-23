@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import { ResetPasswordDto } from '../dto/auth/reset-password-request.dto';
 import { SignInDto } from '../dto/auth/sign-in-request.dto';
 import { CreateUserDto } from '../dto/user/create-user.dto';
+import { UserDto } from '../dto/user/user.dto';
 import { authService } from '../services/auth.service';
 
 export class AuthController {
@@ -20,6 +21,11 @@ export class AuthController {
   async signIn(req: Request<{}, {}, SignInDto>, res: Response) {
     const signedInData = await authService.signIn(req.body);
     res.json(signedInData);
+  }
+
+  async getMe(req: Request<{}, {}, SignInDto>, res: Response) {
+    const user = req.user as UserDto;
+    res.json(user);
   }
 
   async forgotPassword(req: Request<{}, {}, { email: string }>, res: Response) {

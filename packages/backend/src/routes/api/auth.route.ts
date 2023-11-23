@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { authController } from '../../controllers/auth.controller';
+import { authMiddleware } from '../../middleware/auth.middleware';
 import { validator } from '../../middleware/validator.middleware';
 import { activateUserSchema } from '../../schemas/auth/activate-user-request';
 import { forgotPasswordSchema } from '../../schemas/auth/forgot-password.schema';
@@ -19,6 +20,8 @@ authRouter.post(
 );
 
 authRouter.post('/sign-in', validator.body(signInSchema), controllerWrapper(authController.signIn));
+
+authRouter.get('get-me', authMiddleware, controllerWrapper(authController.getMe));
 
 authRouter.post(
   '/forgot-password',
