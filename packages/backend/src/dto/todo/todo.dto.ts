@@ -5,4 +5,5 @@ export type TodoDto = CoreEntityDto & {
   description: string;
   isPublic: boolean;
   isChecked: boolean;
+  userId: string;
 };
