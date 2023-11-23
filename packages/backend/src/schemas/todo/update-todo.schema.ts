@@ -3,7 +3,7 @@ import { UpdateTodoDto } from '../../dto/todo/update-todo.dto';
 
 export const updateTodoSchema = Joi.object<UpdateTodoDto>({
   title: Joi.string().min(3).max(50).optional(),
-  description: Joi.string().optional(),
+  description: Joi.string().allow(''),
   isPublic: Joi.boolean().optional(),
   isChecked: Joi.boolean().optional()
 })

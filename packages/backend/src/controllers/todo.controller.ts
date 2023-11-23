@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import todoService from '../services/todo.service';
+import { UserDto } from '../dto/user/user.dto';
+import { todoService } from '../services/todo.service';
 
 export class TodoController {
   async createTodo(req: Request, res: Response) {
@@ -14,8 +15,10 @@ export class TodoController {
     res.json(todo);
   }
 
-  async getAllTodos(_: Request, res: Response) {
-    const todos = await todoService.findAllTodos();
+  async getAllTodos(request: Request, res: Response) {
+    const user = request.user as UserDto;
+    const todos = await todoService.findAllTodos(user);
+
     res.json(todos);
   }
 
@@ -37,5 +40,4 @@ export class TodoController {
   }
 }
 
-const todoController = new TodoController();
-export default todoController;
+export const todoController = new TodoController();

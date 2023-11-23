@@ -103,6 +103,7 @@ rules:
   function-paren-newline: 'off'
   # We don't need consistent returns
   consistent-return: 'off'
+  import/no-cycle: 'off'
 
   # ⭐ JSX-A11Y rules
   jsx-a11y/no-noninteractive-element-interactions: 'off'
