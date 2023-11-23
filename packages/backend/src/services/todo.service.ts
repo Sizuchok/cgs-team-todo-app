@@ -2,6 +2,7 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import { CreateTodoDto } from '../dto/todo/create-todo.dto';
 import { TodoDto } from '../dto/todo/todo.dto';
 import { UpdateTodoDto } from '../dto/todo/update-todo.dto';
+import { UserDto } from '../dto/user/user.dto';
 import { Todo } from '../entities/todo.entity';
 import { HttpError } from '../exceptions/HttpError';
 
@@ -11,8 +12,18 @@ class TodoService {
     return Todo.save(newTodo);
   }
 
-  async findAllTodos(): Promise<TodoDto[]> {
-    const todos = await Todo.find();
+  async findAllTodos(user: UserDto): Promise<TodoDto[]> {
+    const todos = await Todo.find({
+      where: [
+        {
+          isPublic: true
+        },
+        {
+          isPublic: false,
+          userId: user.id
+        }
+      ]
+    });
     return todos;
   }
 
