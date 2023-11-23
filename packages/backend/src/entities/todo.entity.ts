@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { CoreEntity } from './core.entity';
+import { User } from './user.entity';
 
 @Entity('todos')
 export class Todo extends CoreEntity {
@@ -14,4 +15,16 @@ export class Todo extends CoreEntity {
 
   @Column({ type: 'boolean', default: false })
   isChecked: boolean;
+
+  @ManyToOne(() => User, (user) => user.todos, { onDelete: 'CASCADE' })
+  @JoinColumn({
+    name: 'userId'
+  })
+  user: User;
+
+  @Column({
+    name: 'userId',
+    type: 'uuid'
+  })
+  userId: string;
 }
