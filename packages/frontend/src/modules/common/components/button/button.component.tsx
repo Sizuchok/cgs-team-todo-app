@@ -1,3 +1,4 @@
+import { CircularProgress } from '@mui/material';
 import { ReactNode } from 'react';
 import * as Styled from './button.styled';
 
@@ -19,16 +20,38 @@ type ButtonProps = {
 
 type Props = {
   disabled?: boolean;
+  stretch?: boolean;
+  secondary?: boolean;
 } & (ButtonProps | LinkProps);
 
-// eslint-disable-next-line arrow-body-style
-const Button = ({ type, children, disabled, isLoading, title, onClick }: Props) => {
+const Button = ({
+  type,
+  children,
+  disabled,
+  isLoading,
+  title,
+  onClick,
+  stretch,
+  secondary
+}: // eslint-disable-next-line arrow-body-style
+Props) => {
   return type === 'button' ? (
-    <Styled.Button onClick={onClick} disabled={disabled}>
-      {isLoading ? 'loading...' : title}
+    <Styled.Button
+      className={secondary ? 'secondary' : ''}
+      onClick={onClick}
+      disabled={disabled}
+      $stretch={stretch}
+      type="submit"
+    >
+      {isLoading ? <CircularProgress color="inherit" size="1.5rem" /> : title}
     </Styled.Button>
   ) : (
-    <Styled.Button as="div" disabled={disabled}>
+    <Styled.Button
+      className={secondary ? 'secondary' : ''}
+      as="div"
+      disabled={disabled}
+      $stretch={stretch}
+    >
       {children}
     </Styled.Button>
   );
