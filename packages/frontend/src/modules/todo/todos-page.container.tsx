@@ -27,7 +27,7 @@ const TodosPage = () => {
     <PrimaryLayout>
       <StyledCommon.FiltersContainer>
         <Filters />
-        <Button onClick={handleOpenCreateModal} type="button" title="New todo" />
+        <Button secondary onClick={handleOpenCreateModal} type="button" title="New todo" />
         <SearchBar query="" onChange={() => {}} />
       </StyledCommon.FiltersContainer>
 
