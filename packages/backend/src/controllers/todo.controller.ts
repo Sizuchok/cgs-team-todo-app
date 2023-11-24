@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { GetAllTodosFiltersDto } from '../dto/todo/get-all-todos-filters.dto';
 import { UserDto } from '../dto/user/user.dto';
 import { todoService } from '../services/todo.service';
 
@@ -18,8 +19,9 @@ export class TodoController {
   }
 
   async getAllTodos(request: Request, res: Response) {
+    const filters = request.query as GetAllTodosFiltersDto;
     const user = request.user as UserDto;
-    const todos = await todoService.findAllTodos(user);
+    const todos = await todoService.findAllTodos(user, filters);
 
     res.json(todos);
   }

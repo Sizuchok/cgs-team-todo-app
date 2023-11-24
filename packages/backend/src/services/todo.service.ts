@@ -1,5 +1,6 @@
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import { CreateTodoDto } from '../dto/todo/create-todo.dto';
+import { GetAllTodosFiltersDto } from '../dto/todo/get-all-todos-filters.dto';
 import { TodoDto } from '../dto/todo/todo.dto';
 import { UpdateTodoDto } from '../dto/todo/update-todo.dto';
 import { UserDto } from '../dto/user/user.dto';
@@ -12,18 +13,40 @@ class TodoService {
     return Todo.save(newTodo);
   }
 
-  async findAllTodos(user: UserDto): Promise<TodoDto[]> {
-    const todos = await Todo.find({
-      where: [
-        {
-          isPublic: true
-        },
-        {
-          isPublic: false,
-          userId: user.id
-        }
-      ]
-    });
+  async findAllTodos(
+    user: UserDto,
+    { isChecked, isPublic, limit, offset, query, isPrivate }: GetAllTodosFiltersDto
+  ): Promise<TodoDto[]> {
+    const qb = Todo.createQueryBuilder('todo')
+      // .leftJoinAndSelect('todo.user', 'user')
+      .where('(todo.isPublic = TRUE OR todo.user.id = :userId)', {
+        userId: user.id
+      });
+
+    if (isPublic) {
+      qb.andWhere('todo.isPublic = :isPublic', { isPublic });
+    }
+
+    if (isPrivate) {
+      qb.andWhere('(todo.isPublic = :isPublic AND todo.user.id = :userId)', {
+        userId: user.id,
+        isPublic: !isPrivate
+      });
+    }
+
+    if (isChecked) {
+      qb.andWhere('todo.isChecked = :isChecked', { isChecked });
+    }
+
+    if (query) {
+      qb.andWhere('(todo.title ILIKE :query OR todo.description ILIKE :query)', {
+        query: `%${query}%`
+      });
+    }
+
+    qb.offset(offset).limit(limit);
+
+    const todos = await qb.getMany();
     return todos;
   }
 

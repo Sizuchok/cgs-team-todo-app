@@ -6,12 +6,18 @@ import { checkOwnership } from '../../middleware/checkOwnership';
 import { isExist } from '../../middleware/is-exist.middleware';
 import { validator } from '../../middleware/validator.middleware';
 import { createTodoSchema } from '../../schemas/todo/create-todo.schema';
+import { getAllTodosSchema } from '../../schemas/todo/get-all-todos.schema';
 import { updateTodoSchema } from '../../schemas/todo/update-todo.schema';
 import { controllerWrapper } from '../../utils/controller-wrapper.util';
 
 const todosRouter: Router = Router();
 
-todosRouter.get('/', authMiddleware, controllerWrapper(todoController.getAllTodos));
+todosRouter.get(
+  '/',
+  authMiddleware,
+  validator.query(getAllTodosSchema),
+  controllerWrapper(todoController.getAllTodos)
+);
 
 todosRouter.get(
   '/:id',
