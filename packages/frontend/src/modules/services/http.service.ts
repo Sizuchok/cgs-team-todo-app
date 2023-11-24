@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosStatic } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosStatic, isAxiosError } from 'axios';
 import { APP_KEYS } from '../common/consts';
 
 type RequestConfig<TData = unknown> = AxiosRequestConfig<TData> & {};
@@ -19,6 +19,20 @@ export abstract class HttpService {
     this.fetchingService = axios;
     this.apiVersion = apiVersion;
     this.resource = resource;
+
+    this.fetchingService.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (isAxiosError(error)) {
+          console.log(error.status);
+          if (error.status === 401) {
+            localStorage.removeItem(APP_KEYS.STORAGE_KEYS.JWT_TOKEN);
+          }
+        }
+
+        return Promise.reject(error);
+      }
+    );
   }
 
   private getFullApiUrl(url: string | undefined): string {
@@ -27,7 +41,7 @@ export abstract class HttpService {
 
   private populateTokenToHeaderConfig(): Record<string, string> {
     return {
-      Authorization: localStorage.getItem(APP_KEYS.STORAGE_KEYS.JWT_TOKEN) ?? ''
+      Authorization: `Bearer ${localStorage.getItem(APP_KEYS.STORAGE_KEYS.JWT_TOKEN) ?? ''}`
     };
   }
 
