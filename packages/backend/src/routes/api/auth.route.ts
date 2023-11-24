@@ -21,7 +21,7 @@ authRouter.post(
 
 authRouter.post('/sign-in', validator.body(signInSchema), controllerWrapper(authController.signIn));
 
-authRouter.get('get-me', authMiddleware, controllerWrapper(authController.getMe));
+authRouter.get('/get-me', authMiddleware, controllerWrapper(authController.getMe));
 
 authRouter.post(
   '/forgot-password',
