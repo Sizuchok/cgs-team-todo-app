@@ -9,10 +9,10 @@ export const useDeleteTodo = (id: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: APP_KEYS.QUERY_KEYS.DELETE_TODO,
+    mutationKey: APP_KEYS.QUERY_KEYS_TODO.DELETE_TODO,
     mutationFn: async () => todoService.deleteTodoById(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: APP_KEYS.QUERY_KEYS.GET_ALL_TODOS });
+      queryClient.invalidateQueries({ queryKey: APP_KEYS.QUERY_KEYS_TODO.GET_ALL_TODOS });
       toast.success('Todo deleted successfully');
     },
     onError: (error) => {
@@ -20,7 +20,7 @@ export const useDeleteTodo = (id: string) => {
         // eslint-disable-next-line no-unsafe-optional-chaining
         const code = +error.response?.data.status;
         if (code) toast.error(error.response?.data.message);
-        toast.error(ERROR_MESSAGES.default);
+        else toast.error(ERROR_MESSAGES.default);
       }
     }
   });

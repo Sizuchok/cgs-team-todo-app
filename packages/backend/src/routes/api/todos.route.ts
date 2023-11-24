@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { todoController } from '../../controllers/todo.controller';
 import { Todo } from '../../entities/todo.entity';
-
 import { authMiddleware } from '../../middleware/auth.middleware';
 import { checkOwnership } from '../../middleware/checkOwnership';
 import { isExist } from '../../middleware/is-exist.middleware';

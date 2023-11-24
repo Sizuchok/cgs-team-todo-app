@@ -1,5 +1,8 @@
 import { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
+import { APP_KEYS } from '../../../consts';
 import useMedia from '../../../hooks/use-media.hook';
+import Button from '../../button/button.component';
 import * as Styled from './primary-layout.styled';
 
 type Props = {
@@ -12,7 +15,9 @@ const PrimaryLayout = ({ children }: Props) => {
   return (
     <Styled.PrimaryLayout $isMobile={isMobile}>
       <Styled.Header>
-        <div>My Profile</div>
+        <Button secondary type="link">
+          <Link to={`/${APP_KEYS.ROUTER_KEYS.ME}`}>My Profile</Link>
+        </Button>
       </Styled.Header>
       <Styled.Main>{children}</Styled.Main>
     </Styled.PrimaryLayout>

@@ -38,4 +38,4 @@ export class TodoService extends HttpService {
   }
 }
 
-export const todoService = new TodoService('http://localhost:3030', APP_KEYS.BACKEND_KEYS.TODOS);
+export const todoService = new TodoService(APP_KEYS.BACKEND_KEYS.BACK, APP_KEYS.BACKEND_KEYS.TODOS);

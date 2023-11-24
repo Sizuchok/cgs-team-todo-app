@@ -17,7 +17,7 @@ export default class MailerService {
   constructor(private from: string | undefined = process.env.SMTP_DEFAULT_FROM) {}
 
   async sendActivationEmail(user: UserDto) {
-    const link = `${process.env.FRONT_END_URL}/activate/${user.token}`;
+    const link = `${process.env.FRONT_END_URL}/auth/activate?token=${user.token}`;
 
     await this.transporter.sendMail({
       from: this.from,
@@ -28,7 +28,7 @@ export default class MailerService {
   }
 
   async sendResetPasswordEmail(user: UserDto) {
-    const link = `${process.env.FRONT_END_URL}/reset-password/${user.token}`;
+    const link = `${process.env.FRONT_END_URL}/auth/reset-password?token=${user.token}`;
 
     await this.transporter.sendMail({
       from: this.from,

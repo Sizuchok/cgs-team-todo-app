@@ -30,7 +30,7 @@ export class AuthService {
     const isEqual = await HashingService.compare(password, user.password);
 
     if (!isEqual) {
-      throw new HttpError(StatusCodes.UNAUTHORIZED, 'Passwords do not match');
+      throw new HttpError(StatusCodes.UNAUTHORIZED, 'Invalid email or password');
     }
 
     const payload = { sub: user.id, email: user.email };

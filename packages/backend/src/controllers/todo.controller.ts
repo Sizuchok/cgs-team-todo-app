@@ -5,6 +5,8 @@ import { todoService } from '../services/todo.service';
 
 export class TodoController {
   async createTodo(req: Request, res: Response) {
+    const user = req.user as UserDto;
+    req.body.userId = user.id;
     const todo = await todoService.createTodo(req.body);
     res.status(StatusCodes.CREATED).json(todo);
   }

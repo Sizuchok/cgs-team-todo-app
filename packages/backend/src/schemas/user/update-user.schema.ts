@@ -3,7 +3,6 @@ import { UpdateUserDto } from '../../dto/user/update-user.dto';
 
 export const updateUserSchema = Joi.object<UpdateUserDto>({
   name: Joi.string().min(2).max(16).optional(),
-  email: Joi.string().email().optional(),
   password: Joi.string()
     .min(8)
     .max(24)
