@@ -4,6 +4,6 @@ import { todoService } from '../../services/todo.service';
 
 export const useGetAllTodos = () =>
   useQuery({
-    queryKey: `${APP_KEYS.QUERY_KEYS.GET_ALL_TODOS}`,
+    queryKey: `${APP_KEYS.QUERY_KEYS_TODO.GET_ALL_TODOS}`,
     queryFn: async () => todoService.getAllTodos()
   });

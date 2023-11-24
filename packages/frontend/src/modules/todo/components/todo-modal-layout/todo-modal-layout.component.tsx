@@ -1,14 +1,15 @@
 import { ReactNode } from 'react';
-import * as Styled from './todo-modal-layout.styled';
+import { FormContainer } from '../../../common/components/containers/form-container/form-container.styled';
+import { ModalContainer } from '../../../common/components/containers/modal-container/modal-container.styled';
 
 type Props = {
   children: ReactNode;
 };
 
 const TodoModalLayout = ({ children }: Props) => (
-  <Styled.Container>
-    <Styled.Form>{children}</Styled.Form>
-  </Styled.Container>
+  <ModalContainer>
+    <FormContainer>{children}</FormContainer>
+  </ModalContainer>
 );
 
 export default TodoModalLayout;

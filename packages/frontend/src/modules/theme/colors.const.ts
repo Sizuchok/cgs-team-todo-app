@@ -8,7 +8,8 @@ export const COLORS = {
   background: '#F8F8F8',
   border: '#e4e7ed',
   inputFocus: '#0101ff',
-  danger: '#da1b41'
+  danger: '#da1b41',
+  disabled: '#d3beed'
 } as const;
 
 export const SWITCH_COLORS = {
