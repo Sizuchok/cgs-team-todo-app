@@ -10,24 +10,28 @@ type Props = {
   todos: Todo[] | undefined;
 };
 
-const TodosTablet = ({ todos }: Props) => (
-  <Styled.TodoTabletContainer>
-    <Styled.SwiperWrapper>
-      <Swiper
-        grabCursor
-        scrollbar={{
-          hide: true
-        }}
-        modules={[Scrollbar]}
-      >
-        {(todos ?? []).map((todo) => (
-          <SwiperSlide key={todo.id}>
-            <TodoCard todo={todo} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </Styled.SwiperWrapper>
-  </Styled.TodoTabletContainer>
-);
+// eslint-disable-next-line arrow-body-style
+const TodosTablet = ({ todos }: Props) => {
+  return (
+    <Styled.TodoTabletContainer>
+      <Styled.SwiperWrapper>
+        <Swiper
+          grabCursor
+          scrollbar={{
+            hide: true
+          }}
+          modules={[Scrollbar]}
+          loop
+        >
+          {(todos ?? []).map((todo) => (
+            <SwiperSlide key={todo.id}>
+              <TodoCard todo={todo} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </Styled.SwiperWrapper>
+    </Styled.TodoTabletContainer>
+  );
+};
 
 export default TodosTablet;
