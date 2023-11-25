@@ -1,28 +1,26 @@
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { ReactPaginateProps } from 'react-paginate';
 import * as Styled from './pagination.styled';
 
-type PaginationProps = {
-  currentPage: number;
+type PaginationProps = ReactPaginateProps & {
   pageCount: number;
-  onPageChange: (page: number) => void;
 };
 
-const Pagination = ({ currentPage, pageCount, onPageChange }: PaginationProps) => {
-  const handlePageClick = (data: { selected: number }) => {
-    onPageChange(data.selected);
-  };
-
+const Pagination = ({
+  pageCount,
+  ...paginationProps
+}: // eslint-disable-next-line arrow-body-style
+PaginationProps) => {
   return (
     <Styled.ReactPaginateStyled
+      {...paginationProps}
       previousLabel={<IoIosArrowBack />}
       nextLabel={<IoIosArrowForward />}
       breakLabel="..."
       pageCount={pageCount}
       marginPagesDisplayed={2}
       pageRangeDisplayed={5}
-      onPageChange={handlePageClick}
       activeClassName="active"
-      forcePage={currentPage}
     />
   );
 };

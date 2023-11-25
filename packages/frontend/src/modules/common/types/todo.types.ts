@@ -17,3 +17,8 @@ export type GetAllTodosFilters = BaseQueryParams & {
   isPublic?: boolean;
   isPrivate?: boolean;
 };
+
+export type GetAllTodosResponse = {
+  todos: Todo[];
+  count: number;
+};

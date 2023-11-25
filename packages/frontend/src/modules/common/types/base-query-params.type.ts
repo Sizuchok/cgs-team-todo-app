@@ -1,5 +1,5 @@
 export type BaseQueryParams = {
   query?: string;
-  limit?: string;
-  offset?: string;
+  limit?: number;
+  offset?: number;
 };
