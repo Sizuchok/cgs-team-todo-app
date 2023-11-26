@@ -1,3 +1,4 @@
+/* eslint-disable newline-per-chained-call */
 import Joi from 'joi';
 import { GetAllTodosFiltersDto } from '../../dto/todo/get-all-todos.dto';
 

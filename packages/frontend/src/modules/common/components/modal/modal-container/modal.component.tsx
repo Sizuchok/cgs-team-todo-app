@@ -1,12 +1,12 @@
 import { ModalProps } from '@mui/material/Modal';
-import { ReactNode } from 'react';
+import { ReactNode, Ref, forwardRef } from 'react';
 import * as Styled from './modal.styled';
 
 type Props = ModalProps & {
   children: ReactNode;
 };
 
-const Modal = ({ children, ...props }: Props) => (
+const Modal = forwardRef(({ children, ...props }: Props, ref: Ref<HTMLDivElement>) => (
   <Styled.Modal
     {...props}
     slotProps={{
@@ -15,8 +15,8 @@ const Modal = ({ children, ...props }: Props) => (
       }
     }}
   >
-    {children}
+    <div ref={ref}>{children}</div>
   </Styled.Modal>
-);
+));
 
 export default Modal;

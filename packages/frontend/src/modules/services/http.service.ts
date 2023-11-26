@@ -24,7 +24,6 @@ export abstract class HttpService {
       (response) => response,
       (error) => {
         if (isAxiosError(error)) {
-          console.log(error.status);
           if (error.status === 401) {
             localStorage.removeItem(APP_KEYS.STORAGE_KEYS.JWT_TOKEN);
           }
@@ -33,6 +32,10 @@ export abstract class HttpService {
         return Promise.reject(error);
       }
     );
+    // disable for prod
+    // this.fetchingService.interceptors.request.use((config) =>
+    //   new Promise((resolve) => setTimeout(resolve, 1000)).then(() => config)
+    // );
   }
 
   private getFullApiUrl(url: string | undefined): string {
