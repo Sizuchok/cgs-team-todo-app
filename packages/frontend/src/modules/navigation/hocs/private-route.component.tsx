@@ -1,3 +1,4 @@
+import { useLayoutEffect } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useGetMe } from '../../auth/hooks/get-me.hook';
 import LoadingOverlay from '../../common/components/loading-overlay/loading-overlay.component';
@@ -8,7 +9,11 @@ const PrivateRoute = () => {
 
   const token = localStorage.getItem(APP_KEYS.STORAGE_KEYS.JWT_TOKEN);
 
-  const { isFetching } = useGetMe();
+  const { isFetching, refetch } = useGetMe();
+
+  useLayoutEffect(() => {
+    refetch();
+  }, [location.pathname]);
 
   const getContent = () => {
     if (!token) {
