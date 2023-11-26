@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { GetAllTodosFiltersDto } from '../../dto/todo/get-all-todos-filters.dto';
+import { GetAllTodosFiltersDto } from '../../dto/todo/get-all-todos.dto';
 
 export const getAllTodosSchema = Joi.object<GetAllTodosFiltersDto>({
   limit: Joi.number().positive().integer().optional(),

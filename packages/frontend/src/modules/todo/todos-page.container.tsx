@@ -5,6 +5,7 @@ import Filters from '../common/components/filters/todo-filters.component';
 import PrimaryLayout from '../common/components/layouts/primary-layout/primary-layout.component';
 import LoadingOverlay from '../common/components/loading-overlay/loading-overlay.component';
 import Modal from '../common/components/modal/modal-container/modal.component';
+import Pagination from '../common/components/pagination/pagination.component';
 import SearchBar from '../common/components/search-bar/search-bar.component';
 import ToggleButton from '../common/components/toggle-button/toggle-button.component';
 import useMedia from '../common/hooks/use-media.hook';
@@ -18,6 +19,9 @@ import { useGetAllTodos } from './hooks/get-all-todos.hook';
 import * as StyledCommon from './todos-page.styled';
 
 const TodosPage = () => {
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 10;
+
   const [query, setQuery] = useState<string>('');
   const [debouncedQuery] = useDebounce(query, 500);
 
@@ -25,7 +29,7 @@ const TodosPage = () => {
 
   const [queryParams, setQueryParams] = useState<GetAllTodosFilters>({});
 
-  const { data: todos, isFetching } = useGetAllTodos(queryParams);
+  const { data, isFetching } = useGetAllTodos(queryParams);
 
   const handleQueryChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     setQuery(value);
@@ -86,9 +90,25 @@ const TodosPage = () => {
         <LoadingOverlay />
       ) : (
         <>
-          {isDesktop && <TodosDesktop todos={todos} />}
-          {isTablet && <TodosTablet todos={todos} />}
-          {isMobile && <TodosMobile todos={todos} />}
+          {isDesktop && <TodosDesktop todos={data?.todos} />}
+          {isTablet && <TodosTablet todos={data?.todos} />}
+          {isMobile && <TodosMobile todos={data?.todos} />}
+
+          {!isTablet && (
+            <Pagination
+              forcePage={currentPage}
+              pageCount={Math.ceil((data?.count ?? itemsPerPage) / itemsPerPage) || 1}
+              onPageChange={({ selected }) => {
+                const newOffset = (selected * itemsPerPage) % data!.count || 1;
+                setQueryParams({
+                  ...queryParams,
+                  limit: itemsPerPage,
+                  offset: newOffset
+                });
+                setCurrentPage(selected);
+              }}
+            />
+          )}
         </>
       )}
 

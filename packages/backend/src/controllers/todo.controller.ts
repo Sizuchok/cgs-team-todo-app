@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { GetAllTodosFiltersDto } from '../dto/todo/get-all-todos-filters.dto';
+import { GetAllTodosFiltersDto } from '../dto/todo/get-all-todos.dto';
 import { UserDto } from '../dto/user/user.dto';
 import { todoService } from '../services/todo.service';
 

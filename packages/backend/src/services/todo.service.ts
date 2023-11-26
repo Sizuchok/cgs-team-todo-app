@@ -1,6 +1,6 @@
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import { CreateTodoDto } from '../dto/todo/create-todo.dto';
-import { GetAllTodosFiltersDto } from '../dto/todo/get-all-todos-filters.dto';
+import { GetAllTodosFiltersDto, GetAllTodosResponseDto } from '../dto/todo/get-all-todos.dto';
 import { TodoDto } from '../dto/todo/todo.dto';
 import { UpdateTodoDto } from '../dto/todo/update-todo.dto';
 import { UserDto } from '../dto/user/user.dto';
@@ -16,7 +16,7 @@ class TodoService {
   async findAllTodos(
     user: UserDto,
     { isChecked, isPublic, limit, offset, query, isPrivate }: GetAllTodosFiltersDto
-  ): Promise<TodoDto[]> {
+  ): Promise<GetAllTodosResponseDto> {
     const qb = Todo.createQueryBuilder('todo')
       // .leftJoinAndSelect('todo.user', 'user')
       .where('(todo.isPublic = TRUE OR todo.user.id = :userId)', {
@@ -46,8 +46,8 @@ class TodoService {
 
     qb.offset(offset).limit(limit);
 
-    const todos = await qb.getMany();
-    return todos;
+    const [todos, count] = await qb.getManyAndCount();
+    return { todos, count };
   }
 
   async findTodoById(id: string): Promise<TodoDto> {
