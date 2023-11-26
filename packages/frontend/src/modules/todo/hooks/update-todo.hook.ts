@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { toast } from 'sonner';
 import { APP_KEYS } from '../../common/consts';
 import { ERROR_MESSAGES } from '../../common/consts/error-messages.const';
-import { Todo } from '../../common/types/todo.types';
+import { GetAllTodosResponse } from '../../common/types/todo.types';
 import { todoService } from '../../services/todo.service';
 
 type CreateTodoServiceParams = Parameters<typeof todoService.updateTodoById>;
@@ -15,13 +15,16 @@ export const useUpdateTodo = (id: string, onlyIsChecked?: boolean) => {
     mutationKey: APP_KEYS.QUERY_KEYS_TODO.UPDATE_TODO,
     mutationFn: async (data: CreateTodoServiceParams['1']) => todoService.updateTodoById(id, data),
     onSuccess: (updatedTodo) => {
-      const previousData = queryClient.getQueryData<Todo[]>(APP_KEYS.QUERY_KEYS_TODO.GET_ALL_TODOS);
-
       queryClient.setQueryData(
         [APP_KEYS.QUERY_KEYS_TODO.GET_ALL_TODOS],
-        previousData?.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo))
+        // eslint-disable-next-line arrow-body-style
+        (oldTodos: GetAllTodosResponse | undefined) => {
+          return {
+            count: oldTodos!.count,
+            todos: oldTodos!.todos.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo))
+          };
+        }
       );
-
       toast.success(
         onlyIsChecked
           ? `"${updatedTodo.title}" marked as ${updatedTodo.isChecked ? 'done' : 'undone'}`

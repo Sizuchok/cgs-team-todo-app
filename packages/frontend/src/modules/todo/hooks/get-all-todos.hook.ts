@@ -8,8 +8,9 @@ import { todoService } from '../../services/todo.service';
 
 export const useGetAllTodos = (data: GetAllTodosFilters) =>
   useQuery({
-    queryKey: [`${APP_KEYS.QUERY_KEYS_TODO.GET_ALL_TODOS}`, data],
+    queryKey: [APP_KEYS.QUERY_KEYS_TODO.GET_ALL_TODOS],
     queryFn: async () => todoService.getAllTodos(data),
+    keepPreviousData: true,
     onError: (error) => {
       if (isAxiosError(error)) {
         // eslint-disable-next-line no-unsafe-optional-chaining
