@@ -1,17 +1,24 @@
+import { useEffect } from 'react';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
 import { Scrollbar } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Todo } from '../../../common/types/todo.types';
+import { GetAllTodosFilters } from '../../../common/types/todo.types';
+import { useGetInfiniteTodos } from '../../hooks/get-infinnite-todos.hooks';
 import TodoCard from '../todo-card/todo-card.component';
 import * as Styled from './todos-tablet.styled';
 
 type Props = {
-  todos: Todo[] | undefined;
+  queryParams: GetAllTodosFilters;
 };
 
-// eslint-disable-next-line arrow-body-style
-const TodosTablet = ({ todos }: Props) => {
+const TodosTablet = ({ queryParams }: Props) => {
+  const { data, hasNextPage, fetchNextPage, refetch } = useGetInfiniteTodos(queryParams);
+
+  useEffect(() => {
+    refetch();
+  }, [queryParams]);
+
   return (
     <Styled.TodoTabletContainer>
       <Styled.SwiperWrapper>
@@ -21,13 +28,17 @@ const TodosTablet = ({ todos }: Props) => {
             hide: true
           }}
           modules={[Scrollbar]}
-          loop
+          onReachEnd={() => {
+            if (hasNextPage) fetchNextPage();
+          }}
         >
-          {(todos ?? []).map((todo) => (
-            <SwiperSlide key={todo.id}>
-              <TodoCard todo={todo} />
-            </SwiperSlide>
-          ))}
+          {data?.pages.map((page) =>
+            page.todos.map((todo) => (
+              <SwiperSlide key={todo.id}>
+                <TodoCard todo={todo} />
+              </SwiperSlide>
+            ))
+          )}
         </Swiper>
       </Styled.SwiperWrapper>
     </Styled.TodoTabletContainer>
