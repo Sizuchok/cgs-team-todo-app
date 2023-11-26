@@ -6,6 +6,7 @@ import Checkbox from '../../common/components/checkbox/checkbox.component';
 import Input from '../../common/components/input/input';
 import { APP_KEYS } from '../../common/consts';
 import { SignIn } from '../../common/types/auth.types';
+import ResetPasswordLink from '../components/reset-password-link/reset-password-link.component';
 import { useSignIn } from '../hooks/sign-in.hook';
 import { signInSchema } from '../schemas/sign-in.schema';
 
@@ -58,6 +59,7 @@ const SignInForm = () => {
             disabled={!isValid || isLoading}
             isLoading={isLoading}
           />
+          <ResetPasswordLink />
         </Form>
       )}
     </Formik>

@@ -26,10 +26,6 @@ const TodosDesktop = ({ todos }: Props) => {
             </RowContainer>
           ))}
         </TableContainer>
-
-        <div style={{ marginTop: 'auto', textAlign: 'center' }}>
-          PAGINATION | PAGINATION | PAGINATION | PAGINATION
-        </div>
       </Styled.TodosDesktop>
     </Styled.TodosDesktopContainer>
   );

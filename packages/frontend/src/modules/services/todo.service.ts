@@ -1,10 +1,12 @@
 import { APP_KEYS } from '../common/consts';
-import { CreateTodo, Todo, UpdateTodo } from '../common/types/todo.types';
+import { CreateTodo, GetAllTodosFilters, Todo, UpdateTodo } from '../common/types/todo.types';
 import { HttpService } from './http.service';
 
 export class TodoService extends HttpService {
-  public async getAllTodos() {
-    const response = await this.get<Todo[], void>({});
+  public async getAllTodos(queryParams: GetAllTodosFilters) {
+    const response = await this.get<Todo[], void>({
+      params: queryParams
+    });
     return response.data;
   }
 

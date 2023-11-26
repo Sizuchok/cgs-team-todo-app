@@ -5,6 +5,7 @@ import Checkbox from '../../common/components/checkbox/checkbox.component';
 import Input from '../../common/components/input/input';
 import { FormSignUp } from '../../common/types/auth.types';
 import AuthInfo from '../components/auth-info/auth-info.component';
+import SignInLink from '../components/sign-in-link/sign-in-link.component';
 import { useSignUp } from '../hooks/sign-up.hook';
 import { signUpSchema } from '../schemas/sign-up.schema';
 
@@ -77,6 +78,8 @@ const SignUpForm = () => {
             disabled={!isValid || isLoading}
             isLoading={isLoading}
           />
+
+          <SignInLink />
         </Form>
       )}
     </Formik>
