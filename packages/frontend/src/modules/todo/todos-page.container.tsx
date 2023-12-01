@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 import Button from '../common/components/button/button.component';
-import Filters from '../common/components/filters/todo-filters.component';
+import { Filters } from '../common/components/filters/filters.styled';
 import PrimaryLayout from '../common/components/layouts/primary-layout/primary-layout.component';
 import LoadingOverlay from '../common/components/loading-overlay/loading-overlay.component';
 import Modal from '../common/components/modal/modal-container/modal.component';
@@ -20,16 +20,18 @@ import * as StyledCommon from './todos-page.styled';
 
 const TodosPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 10;
+  const itemsPerPage = 15;
 
   const [query, setQuery] = useState<string>('');
   const [debouncedQuery] = useDebounce(query, 500);
 
   const [openCreateTodoModal, setOpenCreateTodoModal] = useState<boolean>(false);
 
-  const [queryParams, setQueryParams] = useState<GetAllTodosFilters>({});
+  const [queryParams, setQueryParams] = useState<GetAllTodosFilters>({
+    limit: itemsPerPage
+  });
 
-  const { data, isFetching } = useGetAllTodos(queryParams);
+  const { data, isFetching, refetch } = useGetAllTodos(queryParams);
 
   const handleQueryChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     setQuery(value);
@@ -57,7 +59,10 @@ const TodosPage = () => {
   };
 
   const handleSetAll = () => {
-    setQueryParams({});
+    setQueryParams({
+      query: queryParams.query,
+      limit: queryParams.limit
+    });
   };
 
   const handleOpenCreateModal = () => setOpenCreateTodoModal(true);
@@ -72,6 +77,10 @@ const TodosPage = () => {
     });
   }, [debouncedQuery]);
 
+  useEffect(() => {
+    refetch();
+  }, [queryParams]);
+
   return (
     <PrimaryLayout>
       <StyledCommon.FiltersContainer>
@@ -82,8 +91,10 @@ const TodosPage = () => {
           <ToggleButton title="Completed" onClick={handleSetChecked} />
         </Filters>
 
-        <Button secondary onClick={handleOpenCreateModal} type="button" title="New todo" />
-        <SearchBar query={query} onChange={handleQueryChange} />
+        <Filters $reversedWrap>
+          <Button secondary onClick={handleOpenCreateModal} type="button" title="New todo" />
+          <SearchBar query={query} onChange={handleQueryChange} />
+        </Filters>
       </StyledCommon.FiltersContainer>
 
       {isFetching ? (
@@ -91,21 +102,21 @@ const TodosPage = () => {
       ) : (
         <>
           {isDesktop && <TodosDesktop todos={data?.todos} />}
-          {isTablet && <TodosTablet todos={data?.todos} />}
+          {isTablet && <TodosTablet queryParams={queryParams} />}
           {isMobile && <TodosMobile todos={data?.todos} />}
 
           {!isTablet && (
             <Pagination
               forcePage={currentPage}
-              pageCount={Math.ceil((data?.count ?? itemsPerPage) / itemsPerPage) || 1}
+              pageCount={Math.ceil((data?.count ?? itemsPerPage) / itemsPerPage)}
               onPageChange={({ selected }) => {
-                const newOffset = (selected * itemsPerPage) % data!.count || 1;
+                const newOffset = (selected * itemsPerPage) % data!.count;
+                setCurrentPage(selected);
                 setQueryParams({
                   ...queryParams,
                   limit: itemsPerPage,
                   offset: newOffset
                 });
-                setCurrentPage(selected);
               }}
             />
           )}

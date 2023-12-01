@@ -4,8 +4,8 @@ import { BORDER_RADIUS } from '../../../theme/border-radius.const';
 import { rem } from '../../../theme/rem.util';
 
 export const SearchBarContainer = styled.div`
-  height: ${rem(38)};
-  border: 1px solid ${COLORS.border};
+  height: ${rem(36)};
+  outline: 1px solid ${COLORS.border};
   padding-left: ${rem(14)};
   padding-right: ${rem(8)};
   border-radius: ${BORDER_RADIUS.default};

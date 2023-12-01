@@ -9,8 +9,7 @@ export const PrimaryLayout = styled.div<{ $isMobile: boolean }>`
   font-family: ${FONTS.FAMILIES.primary};
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: ${(props) =>
-    !props.$isMobile && `${SECTIONS.header} calc(100vh - ${SECTIONS.header})`};
+  grid-template-rows: ${`${SECTIONS.header} calc(100vh - ${SECTIONS.header})`};
 `;
 
 export const Header = styled.header`

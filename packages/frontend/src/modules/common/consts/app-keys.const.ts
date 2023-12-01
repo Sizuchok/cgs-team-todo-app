@@ -8,6 +8,7 @@ export const STORAGE_KEYS = {
 // React-query keys
 export const QUERY_KEYS_TODO = {
   GET_ALL_TODOS: 'get-all-todos',
+  GET_IFINITE_TODOS: 'get-infinite-todos',
   GET_TODO_BY_ID: 'get-todo-by-id',
   CREATE_TODO: 'create-todo',
   UPDATE_TODO: 'update-todo',

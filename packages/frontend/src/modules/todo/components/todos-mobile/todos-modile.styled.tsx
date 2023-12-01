@@ -6,6 +6,7 @@ export const TodosMobileContainer = styled.div`
   height: 100%;
   margin-top: ${rem(40)};
   margin-bottom: ${rem(40)};
+  overflow: auto;
 
   & > * + * {
     margin-top: ${rem(30)};
