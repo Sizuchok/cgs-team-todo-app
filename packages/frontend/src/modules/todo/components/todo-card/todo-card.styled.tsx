@@ -23,3 +23,13 @@ export const TodoCardDescription = styled.p`
 export const TodoCardActions = styled.div`
   margin: auto auto 0 auto;
 `;
+
+export const TodoCardOwner = styled.span`
+  font-size: ${FONTS.SIZES.s};
+  color: ${COLORS.gray};
+`;
+
+export const TodoCardHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;

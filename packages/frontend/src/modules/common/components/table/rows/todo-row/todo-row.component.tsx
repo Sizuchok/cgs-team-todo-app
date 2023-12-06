@@ -6,6 +6,7 @@ type Props = {
 
 const TodoRow = ({ todo }: Props) => (
   <>
+    <div>{todo.user.name}</div>
     <div>{todo.title}</div>
     <div>{todo.description}</div>
   </>

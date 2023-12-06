@@ -11,7 +11,7 @@ export const Row = styled.div<{ $darker?: boolean; $gridTemplateColumns: string 
   border-radius: ${BORDER_RADIUS.default};
   font-weight: 700;
   font-size: 16px;
-  color: #111112;
+  color: ${COLORS.black};
   height: 56px;
   position: relative;
 

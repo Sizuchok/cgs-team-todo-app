@@ -8,7 +8,10 @@ type Props = {
 
 const TodoCard = ({ todo }: Props) => (
   <Styled.TodoCard>
-    <Styled.TodoCardTitle>{todo.title}</Styled.TodoCardTitle>
+    <Styled.TodoCardHeader>
+      <Styled.TodoCardTitle>{todo.title}</Styled.TodoCardTitle>
+      <Styled.TodoCardOwner>{todo.user.name}</Styled.TodoCardOwner>
+    </Styled.TodoCardHeader>
     <Styled.TodoCardDescription>{todo.description}</Styled.TodoCardDescription>
     <Styled.TodoCardActions>
       <TodoActions todo={todo} />
