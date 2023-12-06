@@ -8,6 +8,7 @@ import Modal from '../common/components/modal/modal-container/modal.component';
 import Pagination from '../common/components/pagination/pagination.component';
 import SearchBar from '../common/components/search-bar/search-bar.component';
 import ToggleButton from '../common/components/toggle-button/toggle-button.component';
+import Toggler from '../common/components/toggler/toggler.component';
 import useMedia from '../common/hooks/use-media.hook';
 import { GetAllTodosFilters } from '../common/types/todo.types';
 import CreateTodoForm from './components/forms/create-todo-form.component';
@@ -85,10 +86,12 @@ const TodosPage = () => {
     <PrimaryLayout>
       <StyledCommon.FiltersContainer>
         <Filters>
-          <ToggleButton title="All" onClick={handleSetAll} />
-          <ToggleButton title="Public" onClick={handleSetPublic} />
-          <ToggleButton title="Private" onClick={handleSetPrivate} />
-          <ToggleButton title="Completed" onClick={handleSetChecked} />
+          <Toggler>
+            <ToggleButton resets title="All" onClick={handleSetAll} />
+            <ToggleButton title="Public" onClick={handleSetPublic} />
+            <ToggleButton title="Private" onClick={handleSetPrivate} />
+            <ToggleButton title="Completed" onClick={handleSetChecked} />
+          </Toggler>
         </Filters>
 
         <Filters $reversedWrap>
