@@ -18,7 +18,7 @@ class TodoService {
     { isChecked, isPublic, limit, offset, query, isPrivate }: GetAllTodosFiltersDto
   ): Promise<GetAllTodosResponseDto> {
     const qb = Todo.createQueryBuilder('todo')
-      // .leftJoinAndSelect('todo.user', 'user')
+      .leftJoinAndSelect('todo.user', 'user')
       .where('(todo.isPublic = TRUE OR todo.user.id = :userId)', {
         userId: user.id
       });

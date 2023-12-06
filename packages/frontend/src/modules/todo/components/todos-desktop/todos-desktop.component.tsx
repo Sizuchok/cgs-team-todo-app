@@ -10,13 +10,13 @@ type Props = {
 };
 
 const TodosDesktop = ({ todos }: Props) => {
-  const gridTemplateColumns = '0.25fr 0.5fr 0.2fr';
+  const gridTemplateColumns = '0.2fr 0.25fr 0.5fr 0.2fr';
 
   return (
     <Styled.TodosDesktopContainer>
       <Styled.TodosDesktop>
         <TableContainer
-          columns={['Title', 'Description', 'Actions']}
+          columns={['Owner', 'Title', 'Description', 'Actions']}
           gridTemplateColumns={gridTemplateColumns}
         >
           {(todos ?? []).map((todo) => (

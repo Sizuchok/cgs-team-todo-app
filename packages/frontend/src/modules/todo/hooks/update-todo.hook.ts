@@ -15,16 +15,21 @@ export const useUpdateTodo = (id: string, onlyIsChecked?: boolean) => {
     mutationKey: APP_KEYS.QUERY_KEYS_TODO.UPDATE_TODO,
     mutationFn: async (data: CreateTodoServiceParams['1']) => todoService.updateTodoById(id, data),
     onSuccess: (updatedTodo) => {
-      queryClient.setQueryData(
+      queryClient.setQueriesData(
         [APP_KEYS.QUERY_KEYS_TODO.GET_ALL_TODOS],
         // eslint-disable-next-line arrow-body-style
         (oldTodos: GetAllTodosResponse | undefined) => {
           return {
+            // TODO: fix no null assertion
             count: oldTodos!.count,
-            todos: oldTodos!.todos.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo))
+            // eslint-disable-next-line no-confusing-arrow
+            todos: oldTodos!.todos.map((todo) =>
+              todo.id === updatedTodo.id ? Object.assign(todo, updatedTodo) : todo
+            )
           };
         }
       );
+
       toast.success(
         onlyIsChecked
           ? `"${updatedTodo.title}" marked as ${updatedTodo.isChecked ? 'done' : 'undone'}`
