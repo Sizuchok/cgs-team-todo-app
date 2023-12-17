@@ -21,6 +21,8 @@ export const ReactPaginateStyled = styled(ReactPaginate)`
     border-radius: 5px;
     display: flex;
     margin: auto 0;
+    height: 100%;
+    align-items: center;
 
     &:hover {
       color: ${COLORS.primary};

@@ -22,3 +22,8 @@ export const SWITCH_COLORS = {
   backgroundDark: '#39393D',
   backgroundLight: '#E9E9EA'
 } as const;
+
+export const FILTER_COLORS = {
+  PRIVATE: '#EB4C42',
+  COMPELETED: '#46AF69'
+} as const;

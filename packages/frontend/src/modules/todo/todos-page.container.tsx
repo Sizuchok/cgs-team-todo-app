@@ -11,6 +11,7 @@ import ToggleButton from '../common/components/toggle-button/toggle-button.compo
 import Toggler from '../common/components/toggler/toggler.component';
 import useMedia from '../common/hooks/use-media.hook';
 import { GetAllTodosFilters } from '../common/types/todo.types';
+import { FILTER_COLORS } from '../theme';
 import CreateTodoForm from './components/forms/create-todo-form.component';
 import TodoModalLayout from './components/todo-modal-layout/todo-modal-layout.component';
 import TodosDesktop from './components/todos-desktop/todos-desktop.component';
@@ -21,7 +22,7 @@ import * as StyledCommon from './todos-page.styled';
 
 const TodosPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 15;
+  const itemsPerPage = 5;
 
   const [query, setQuery] = useState<string>('');
   const [debouncedQuery] = useDebounce(query, 500);
@@ -38,23 +39,29 @@ const TodosPage = () => {
     setQuery(value);
   };
 
-  const handleSetPrivate = () => {
+  const mutateQueryParams = (newValues: GetAllTodosFilters) => {
+    setCurrentPage(0);
     setQueryParams({
       ...queryParams,
+      ...newValues,
+      offset: 0
+    });
+  };
+
+  const handleSetPrivate = () => {
+    mutateQueryParams({
       isPrivate: !queryParams.isPrivate
     });
   };
 
   const handleSetPublic = () => {
-    setQueryParams({
-      ...queryParams,
+    mutateQueryParams({
       isPublic: !queryParams.isPublic
     });
   };
 
   const handleSetChecked = () => {
-    setQueryParams({
-      ...queryParams,
+    mutateQueryParams({
       isChecked: !queryParams.isChecked
     });
   };
@@ -72,9 +79,8 @@ const TodosPage = () => {
   const { isDesktop, isMobile, isTablet } = useMedia();
 
   useEffect(() => {
-    setQueryParams({
-      ...queryParams,
-      query: debouncedQuery === '' ? undefined : debouncedQuery
+    mutateQueryParams({
+      query: debouncedQuery
     });
   }, [debouncedQuery]);
 
@@ -87,10 +93,18 @@ const TodosPage = () => {
       <StyledCommon.FiltersContainer>
         <Filters>
           <Toggler>
-            <ToggleButton resets title="All" onClick={handleSetAll} />
+            <ToggleButton _default title="All" onClick={handleSetAll} />
             <ToggleButton title="Public" onClick={handleSetPublic} />
-            <ToggleButton title="Private" onClick={handleSetPrivate} />
-            <ToggleButton title="Completed" onClick={handleSetChecked} />
+            <ToggleButton
+              title="Private"
+              onClick={handleSetPrivate}
+              color={FILTER_COLORS.PRIVATE}
+            />
+            <ToggleButton
+              title="Completed"
+              onClick={handleSetChecked}
+              color={FILTER_COLORS.COMPELETED}
+            />
           </Toggler>
         </Filters>
 
@@ -107,23 +121,23 @@ const TodosPage = () => {
           {isDesktop && <TodosDesktop todos={data?.todos} />}
           {isTablet && <TodosTablet queryParams={queryParams} />}
           {isMobile && <TodosMobile todos={data?.todos} />}
-
-          {!isTablet && (
-            <Pagination
-              forcePage={currentPage}
-              pageCount={Math.ceil((data?.count ?? itemsPerPage) / itemsPerPage)}
-              onPageChange={({ selected }) => {
-                const newOffset = (selected * itemsPerPage) % data!.count;
-                setCurrentPage(selected);
-                setQueryParams({
-                  ...queryParams,
-                  limit: itemsPerPage,
-                  offset: newOffset
-                });
-              }}
-            />
-          )}
         </>
+      )}
+
+      {!isTablet && (
+        <Pagination
+          forcePage={currentPage}
+          pageCount={Math.ceil((data?.count ?? itemsPerPage) / itemsPerPage)}
+          onPageChange={({ selected }) => {
+            const newOffset = (selected * itemsPerPage) % data!.count;
+            setCurrentPage(selected);
+            setQueryParams({
+              ...queryParams,
+              limit: itemsPerPage,
+              offset: newOffset
+            });
+          }}
+        />
       )}
 
       <Modal open={openCreateTodoModal} onClose={handleCloseCreateModal}>

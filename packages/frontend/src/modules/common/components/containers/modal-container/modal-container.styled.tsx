@@ -7,7 +7,8 @@ export const ModalContainer = styled.div`
   display: flex;
   justify-content: center;
   border-radius: ${BORDER_RADIUS.default};
-  width: ${rem(595)};
+  max-width: ${rem(595)};
+  width: 100%;
   max-height: 90%;
   background-color: ${COLORS.white};
   overflow-y: auto;
