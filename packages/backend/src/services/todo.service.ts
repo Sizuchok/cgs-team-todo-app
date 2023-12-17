@@ -15,27 +15,30 @@ class TodoService {
 
   async findAllTodos(
     user: UserDto,
-    { isChecked, isPublic, limit, offset, query, isPrivate }: GetAllTodosFiltersDto
+    queryParams: GetAllTodosFiltersDto
   ): Promise<GetAllTodosResponseDto> {
-    const qb = Todo.createQueryBuilder('todo')
-      .leftJoinAndSelect('todo.user', 'user')
-      .where('(todo.isPublic = TRUE OR todo.user.id = :userId)', {
-        userId: user.id
-      });
+    const { isChecked, isPrivate, isPublic, limit, offset, query } = queryParams;
+
+    const qb = Todo.createQueryBuilder('todo').leftJoinAndSelect('todo.user', 'user');
 
     if (isPublic) {
-      qb.andWhere('todo.isPublic = :isPublic', { isPublic });
+      qb.orWhere('todo.isPublic = TRUE');
     }
 
     if (isPrivate) {
-      qb.andWhere('(todo.isPublic = :isPublic AND todo.user.id = :userId)', {
-        userId: user.id,
-        isPublic: !isPrivate
+      qb.orWhere('(todo.isPublic = FALSE AND todo.user.id = :userId)', {
+        userId: user.id
       });
     }
 
     if (isChecked) {
-      qb.andWhere('todo.isChecked = :isChecked', { isChecked });
+      qb.andWhere('todo.isChecked = TRUE');
+    }
+
+    if (!Object.values(queryParams).includes(true)) {
+      qb.where('(todo.user.id = :userId OR todo.isPublic = TRUE)', {
+        userId: user.id
+      });
     }
 
     if (query) {
